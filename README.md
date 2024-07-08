@@ -1,3 +1,8 @@
+### davedawson_co
+
+## Badges
+[![publish-to-github-pages](https://github.com/davewd/davedawson_co/actions/workflows/publish.yml/badge.svg)](https://github.com/davewd/davedawson_co/actions/workflows/publish.yml)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
