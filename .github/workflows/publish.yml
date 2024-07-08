@@ -36,6 +36,9 @@ jobs:
       - name: List all
         run: ls -lta
 
+      - name: List all
+        run: cd .. && ls -lta
+
       - name: Upload artifact 📡
         uses: actions/upload-pages-artifact@v3
         with:
