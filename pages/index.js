@@ -5,13 +5,125 @@ const inter = Inter({
   subsets: ['latin'],
 });
 
+function r(from, to) {
+  return ~~(Math.random() * (to - from + 1) + from);
+}
+function pick() {
+  return arguments[r(0, arguments.length - 1)];
+}
+function getChar() {
+  return String.fromCharCode(pick(r(0x3041, 0x30ff), r(0x2000, 0x206f), r(0x0020, 0x003f)));
+}
+function loop(fn, delay) {
+  let stamp = Date.now();
+  function _loop() {
+    if (Date.now() - stamp >= delay) {
+      fn();
+      stamp = Date.now();
+    }
+    requestAnimationFrame(_loop);
+  }
+  requestAnimationFrame(_loop);
+}
+class Char {
+  constructor() {
+    this.element = document.createElement('span');
+    this.mutate();
+  }
+  mutate() {
+    this.element.textContent = getChar();
+  }
+}
+class Trail {
+  constructor(list = [], options) {
+    this.list = list;
+    this.options = Object.assign({ size: 10, offset: 0 }, options);
+    this.body = [];
+    this.move();
+  }
+  traverse(fn) {
+    this.body.forEach((n, i) => {
+      let last = i == this.body.length - 1;
+      if (n) fn(n, i, last);
+    });
+  }
+  move() {
+    this.body = [];
+    let { offset, size } = this.options;
+    for (let i = 0; i < size; ++i) {
+      let item = this.list[offset + i - size + 1];
+      this.body.push(item);
+    }
+    this.options.offset = (offset + 1) % (this.list.length + size - 1);
+  }
+}
+class Rain {
+  constructor({ target, row }) {
+    this.element = document.createElement('p');
+    this.build(row);
+    if (target) {
+      target.appendChild(this.element);
+    }
+    this.drop();
+  }
+  build(row = 20) {
+    let root = document.createDocumentFragment();
+    let chars = [];
+    for (let i = 0; i < row; ++i) {
+      let c = new Char();
+      root.appendChild(c.element);
+      chars.push(c);
+      if (Math.random() < 0.5) {
+        loop(() => c.mutate(), r(1e3, 5e3));
+      }
+    }
+    this.trail = new Trail(chars, {
+      size: r(10, 30),
+      offset: r(0, 100),
+    });
+    this.element.appendChild(root);
+  }
+  drop() {
+    let trail = this.trail;
+    let len = trail.body.length;
+    let delay = r(10, 100);
+    loop(() => {
+      trail.move();
+      trail.traverse((c, i, last) => {
+        c.element.style = `
+          color: hsl(136, 100%, ${(85 / len) * (i + 1)}%)
+        `;
+        if (last) {
+          c.mutate();
+          c.element.style = `
+            color: hsl(136, 100%, 85%);
+            text-shadow:
+              0 0 .5em #fff,
+              0 0 .5em currentColor;
+          `;
+        }
+      });
+    }, delay);
+  }
+}
+
+function rain_load() {
+  const rain = document.querySelector('rain');
+  rain.innerHTML = '';
+  for (let i = 0; i < 20; ++i) {
+    new Rain({ target: rain, row: 100 });
+  }
+}
+setTimeout(rain_load, 500);
 export default function Home() {
   return (
     <main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
-      <div className="relative flex place-items-center items-center justify-between font-mono text-sm lg:flex">
+      <rain className="flex flex-row absolute z-index[-1] display-block" onload="rain_load"></rain>
+      <div className="relative flex flex-col place-items-center items-center justify-between font-mono z-50 text-sm lg:flex">
         <div className="place-items-center w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           <h2 className={`mb-3 text-2xl font-semibold`}>Hi ... I&#39;m Dave </h2>
-          I build automated digital models of our real world to predict financial outcomes.
+          I model digital &#39;twins&#39; of the real world to help predict financial outcomes.
+          <br />
           <br />
           Take a look at some of my work below
         </div>
@@ -42,7 +154,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>Outcomes</h2>
+          <h2 className={`mb-3 text-2xl font-semibold`}>Journey</h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>A timeline of key milestones</p>
         </a>
         <a
@@ -60,7 +172,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>Future</h2>
+          <h2 className={`mb-3 text-2xl font-semibold`}>Legacy</h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>Progress towards my goals</p>
         </a>
       </div>
