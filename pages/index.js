@@ -16,7 +16,7 @@ export default function Home() {
     <
     br p className = "fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30" >
     Hi,
-    I 'm Dave. </br>
+    I 'm Dave. <br/>
     I 've got XX Years experience at the intersection of tech and finance.<br/>
     I build digital models of the real world to enable automation and prediction. < br / >
     Take a look at some of my work below < /p > <
