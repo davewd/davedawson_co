@@ -11,8 +11,13 @@ function r(from, to) {
 function pick() {
   return arguments[r(0, arguments.length - 1)];
 }
-function getChar() {
-  return String.fromCharCode(pick(r(0x3041, 0x30ff), r(0x2000, 0x206f), r(0x0020, 0x003f)));
+function getChar(i) {
+  const dwd = 'David Dawson';
+  if (i < dwd.length) {
+    return dwd[i];
+  } else {
+    return String.fromCharCode(pick(r(0x3041, 0x30ff), r(0x2000, 0x206f), r(0x0020, 0x003f)));
+  }
 }
 function loop(fn, delay) {
   let stamp = Date.now();
@@ -26,13 +31,13 @@ function loop(fn, delay) {
   requestAnimationFrame(_loop);
 }
 class Char {
-  constructor() {
+  constructor(i) {
     this.element = document.createElement('span');
     this.element.style = `display: block; align-items: center; width: 2vmax; height: 100%; font-size: 2vmax; color: #9bff9b11; text-align: center;`;
-    this.mutate();
+    this.mutate(i);
   }
-  mutate() {
-    this.element.textContent = getChar();
+  mutate(i) {
+    this.element.textContent = getChar(i);
   }
 }
 class Trail {
@@ -72,11 +77,11 @@ class Rain {
     let root = document.createDocumentFragment();
     let chars = [];
     for (let i = 0; i < row; ++i) {
-      let c = new Char();
+      let c = new Char(i);
       root.appendChild(c.element);
       chars.push(c);
       if (Math.random() < 0.5) {
-        loop(() => c.mutate(), r(1e3, 5e3));
+        loop(() => c.mutate(i), r(1e3, 5e3));
       }
     }
     this.trail = new Trail(chars, {
@@ -148,7 +153,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>Journey</h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>A timeline of key milestones</p>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>Timeline of personal milestones</p>
         </a>
         <a
           href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
@@ -157,7 +162,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>Impact</h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>A Portfolio of outcomes </p>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>Portfolio of outcomes</p>
         </a>
 
         <a
@@ -167,7 +172,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>Brand</h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>My digital footprint</p>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>Digital footprint</p>
         </a>
         <a
           href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
@@ -176,7 +181,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>Legacy</h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>Progress towards my goals</p>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>Quantiative Goal Progress</p>
         </a>
       </div>
     </main>
