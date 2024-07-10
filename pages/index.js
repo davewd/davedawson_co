@@ -28,7 +28,7 @@ function loop(fn, delay) {
 class Char {
   constructor() {
     this.element = document.createElement('span');
-    this.element.style = `display: block; align-items: center; width: 2vmax; height: 2vmax; font-size: 2vmax; color: #9bff9b11; text-align: center;`;
+    this.element.style = `display: block; align-items: center; width: 2vmax; height: 100%; font-size: 2vmax; color: #9bff9b11; text-align: center;`;
     this.mutate();
   }
   mutate() {
@@ -93,12 +93,12 @@ class Rain {
       trail.move();
       trail.traverse((c, i, last) => {
         c.element.style = `
-          color: hsl(136, 100%, ${(85 / len) * (i + 1)}%)
+          color: hsl(136, 100%, ${(85 / len) * (i + 1)}%); display: block; align-items: center; width: 2vmax; height: 100%;
         `;
         if (last) {
           c.mutate();
           c.element.style = `
-            color: hsl(136, 100%, 85%);
+            color: hsl(136, 100%, 85%);display: block; align-items: center; width: 2vmax; height: 100%;
             text-shadow:
               0 0 .5em #fff,
               0 0 .5em currentColor;
@@ -124,7 +124,7 @@ export default function Home() {
       <div className="relative flex flex-col place-items-center items-center justify-between font-mono z-50 text-sm lg:flex">
         <div className="place-items-center w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           <h2 className={`mb-3 text-2xl font-semibold`}>Hi ... I&#39;m Dave </h2>
-          I model digital &#39;twins&#39; of the real world to help predict financial outcomes.
+          I create digital models of the real world to help predict financial outcomes.
           <br />
           <br />
           Take a look at some of my work below
@@ -142,15 +142,6 @@ export default function Home() {
       </div>
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left z-50">
         <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>Connections</h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>My digital footprint</p>
-        </a>
-        <a
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
           className="group rounded-lg border border-transparent px-5 py-4 justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           target="_blank"
@@ -167,6 +158,16 @@ export default function Home() {
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>Impact</h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>A Portfolio of outcomes </p>
+        </a>
+
+        <a
+          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
+          className="group rounded-lg border border-transparent px-5 py-4 justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <h2 className={`mb-3 text-2xl font-semibold`}>Brand</h2>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>My digital footprint</p>
         </a>
         <a
           href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
